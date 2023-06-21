@@ -24,15 +24,9 @@ void main() {
 // To try without auto-consume on another platform, change `true` to `false` here.
 final bool _kAutoConsume = Platform.isIOS || true;
 
-const String _kConsumableId = 'LenienceIAP';
-const String _kUpgradeId = 'LenienceIAP';
-const String _kSilverSubscriptionId = 'LenienceIAP';
-const String _kGoldSubscriptionId = 'LenienceIAP';
+const String _kSilverSubscriptionId = 'lenience_iap_game_3';
 const List<String> _kProductIds = <String>[
-  _kConsumableId,
-  _kUpgradeId,
   _kSilverSubscriptionId,
-  _kGoldSubscriptionId,
 ];
 
 class _MyApp extends StatefulWidget {
@@ -307,7 +301,7 @@ class _MyAppState extends State<_MyApp> {
                       );
                     }
 
-                    if (productDetails.id == _kConsumableId) {
+                    if (productDetails.id == _kSilverSubscriptionId) {
                       _inAppPurchase.buyConsumable(
                           purchaseParam: purchaseParam,
                           autoConsume: _kAutoConsume);
@@ -334,7 +328,7 @@ class _MyAppState extends State<_MyApp> {
               leading: CircularProgressIndicator(),
               title: Text('Fetching consumables...')));
     }
-    if (!_isAvailable || _notFoundIds.contains(_kConsumableId)) {
+    if (!_isAvailable || _notFoundIds.contains(_kSilverSubscriptionId)) {
       return const Card();
     }
     const ListTile consumableHeader =
@@ -404,7 +398,7 @@ class _MyAppState extends State<_MyApp> {
 
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
     // IMPORTANT!! Always verify purchase details before delivering the product.
-    if (purchaseDetails.productID == _kConsumableId) {
+    if (purchaseDetails.productID == _kSilverSubscriptionId) {
       await ConsumableStore.save(purchaseDetails.purchaseID!);
       final List<String> consumables = await ConsumableStore.load();
       setState(() {
@@ -454,7 +448,8 @@ class _MyAppState extends State<_MyApp> {
           }
         }
         if (Platform.isAndroid) {
-          if (!_kAutoConsume && purchaseDetails.productID == _kConsumableId) {
+          if (!_kAutoConsume &&
+              purchaseDetails.productID == _kSilverSubscriptionId) {
             final InAppPurchaseAndroidPlatformAddition androidAddition =
                 _inAppPurchase.getPlatformAddition<
                     InAppPurchaseAndroidPlatformAddition>();
@@ -492,10 +487,10 @@ class _MyAppState extends State<_MyApp> {
     // by using the subscription group feature in iTunesConnect.
     GooglePlayPurchaseDetails? oldSubscription;
     if (productDetails.id == _kSilverSubscriptionId &&
-        purchases[_kGoldSubscriptionId] != null) {
+        purchases[_kSilverSubscriptionId] != null) {
       oldSubscription =
-          purchases[_kGoldSubscriptionId]! as GooglePlayPurchaseDetails;
-    } else if (productDetails.id == _kGoldSubscriptionId &&
+          purchases[_kSilverSubscriptionId]! as GooglePlayPurchaseDetails;
+    } else if (productDetails.id == _kSilverSubscriptionId &&
         purchases[_kSilverSubscriptionId] != null) {
       oldSubscription =
           purchases[_kSilverSubscriptionId]! as GooglePlayPurchaseDetails;
